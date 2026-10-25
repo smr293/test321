@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
+import "@fontsource/anton/400.css";
+import "@fontsource-variable/archivo";
 import { GeistMono } from "geist/font/mono";
-import { GeistSans } from "geist/font/sans";
 import { cookies } from "next/headers";
 import { Suspense } from "react";
 import { Flash } from "@/components/flash";
@@ -30,7 +31,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const theme = jar.get("mma_theme")?.value ?? "dark";
   const light = theme === "light";
   return (
-    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable} ${light ? "light" : ""}`} suppressHydrationWarning>
+    <html lang="en" className={`${GeistMono.variable} ${light ? "light" : ""}`} suppressHydrationWarning>
       <body className="min-h-dvh antialiased">
         <a
           href="#main"

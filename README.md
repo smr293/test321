@@ -36,6 +36,15 @@ npm run dev                       # http://localhost:3000
 First boot in development also creates a platform admin and seeds demo data if the database has no gyms.
 For a hosted customer demo set `DEMO_SEED=true` in production — see [docs/DEMO.md](docs/DEMO.md).
 
+## Design system
+
+Editorial, not decorative — the UI is meant to read like a club's own paperwork, not a SaaS template.
+
+- **Type:** `Anton` (display: headlines, wordmark, big numbers) + `Archivo Variable` (UI text) + `Geist Mono` (labels, ids, money). Fonts ship from npm via `@fontsource`, so builds work offline.
+- **Colour:** near-black `#0a0b0c`, warm off-white ink `#f3f1ea`, one signal orange `#ff5c29`. Light mode swaps to warm paper `#f4f2ec` with `#c2410c`.
+- **Form:** 4 px radii, hairlines instead of shadows, no gradients, no glows, no icon-card grids. Lists and tables carry the layout; `.ledger-row`, `.rule-top`, `.eyebrow`, `.display` are the building blocks in `globals.css`.
+- **Accessible by default:** visible focus ring, skip link, AA-checked text pairs, `prefers-reduced-motion` respected.
+
 ### Demo accounts
 
 | Role | Email | Password |

@@ -98,8 +98,8 @@ export function LoginForm({
         )}
       </div>
       {demo?.length ? (
-        <div className="rounded-xl border p-3 text-xs" style={{ borderColor: "var(--line)", background: "var(--card-2)" }}>
-          <p className="mb-2 font-semibold">Demo accounts (development only)</p>
+        <div className="border p-3 text-xs" style={{ borderColor: "var(--line)", background: "var(--card-2)" }}>
+          <p className="mono mb-2 text-[0.65rem] uppercase tracking-[0.14em]">Demo accounts</p>
           <div className="grid gap-1.5">
             {demo.map((d) => (
               <button
@@ -117,7 +117,7 @@ export function LoginForm({
             ))}
           </div>
           <p className="mt-2" style={{ color: "var(--muted)" }}>
-            Click a row to fill the form. Password: <code>demo1234</code> · admin: <code>admin</code>
+            Click a row to fill the form, then sign in. Password: <code>demo1234</code>.
           </p>
         </div>
       ) : null}
@@ -226,25 +226,61 @@ export function ResetPasswordForm({ token }: { token: string }) {
   );
 }
 
-export function AuthCard({ title, subtitle, children, footer }: { title: string; subtitle?: string; children: React.ReactNode; footer?: React.ReactNode }) {
+export function AuthCard({
+  title,
+  subtitle,
+  children,
+  footer,
+}: {
+  title: string;
+  subtitle?: string;
+  children: React.ReactNode;
+  footer?: React.ReactNode;
+}) {
   return (
-    <div className="w-full max-w-md">
-      <div className="mb-6 text-center">
-        <Link href="/" className="inline-flex items-center gap-2 text-lg font-semibold tracking-tight">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: "var(--accent)", color: "var(--accent-ink)" }}>
-            <span className="text-sm font-black">M</span>
-          </span>
-          MMA OS
+    <div className="grid w-full max-w-5xl gap-12 lg:grid-cols-[1fr_1fr] lg:gap-20">
+      {/* Editorial side: only the wordmark, a line, and the promise. */}
+      <div className="hidden flex-col justify-between border-l pl-8 lg:flex" style={{ borderColor: "var(--line-strong)" }}>
+        <Link href="/" className="display text-[1.5rem]" aria-label="MMA OS — home">
+          MMA<span style={{ color: "var(--accent)" }}>OS</span>
         </Link>
-        <h1 className="mt-6 text-2xl font-semibold tracking-tight">{title}</h1>
-        {subtitle ? (
-          <p className="mt-1 text-sm" style={{ color: "var(--muted)" }}>
-            {subtitle}
+        <div>
+          <p className="display text-[clamp(2.2rem,4vw,3.4rem)]">
+            Train.
+            <br />
+            Fight.
+            <br />
+            Improve.
           </p>
+          <p className="mt-5 max-w-xs text-sm leading-relaxed" style={{ color: "var(--muted)" }}>
+            Memberships, classes, attendance, coach notes and fight camps — for the people on the mats, not
+            for a spreadsheet.
+          </p>
+        </div>
+        <p className="mono text-[0.65rem] uppercase tracking-[0.16em]" style={{ color: "var(--muted)" }}>
+          One login · gym, coach or athlete
+        </p>
+      </div>
+
+      <div className="w-full max-w-md">
+        <div className="mb-6">
+          <Link href="/" className="display mb-6 inline-block text-[1.5rem] lg:hidden" aria-label="MMA OS — home">
+            MMA<span style={{ color: "var(--accent)" }}>OS</span>
+          </Link>
+          <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
+          {subtitle ? (
+            <p className="mt-1 text-sm" style={{ color: "var(--muted)" }}>
+              {subtitle}
+            </p>
+          ) : null}
+        </div>
+        <div className="card p-6">{children}</div>
+        {footer ? (
+          <div className="mono mt-4 text-[0.7rem]" style={{ color: "var(--muted)" }}>
+            {footer}
+          </div>
         ) : null}
       </div>
-      <div className="card p-6">{children}</div>
-      {footer ? <div className="mt-4 text-center text-xs" style={{ color: "var(--muted)" }}>{footer}</div> : null}
     </div>
   );
 }
