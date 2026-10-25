@@ -1,0 +1,20 @@
+{
+  "name": "MMA OS demo",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:22-bookworm",
+  "hostRequirements": { "cpus": 2, "memory": "4gb", "storage": "32gb" },
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": {
+      "label": "MMA OS — live demo",
+      "onAutoForward": "openBrowser",
+      "visibility": "public",
+      "protocol": "http"
+    }
+  },
+  "postCreateCommand": "bash .devcontainer/start.sh",
+  "postStartCommand": "bash .devcontainer/start.sh",
+  "postAttachCommand": "bash .devcontainer/start.sh",
+  "customizations": {
+    "vscode": { "extensions": ["bradlc.vscode-tailwindcss", "ms-azuretools.vscode-docker"] }
+  }
+}

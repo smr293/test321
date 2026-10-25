@@ -69,6 +69,21 @@ demo.dindomän.se {
 
 På Fly kan du i stället sätta `min_machines_running = 0` (maskinen sover när ingen använder den) och rotera `BOOTSTRAP_ADMIN_PASSWORD` mellan kunder.
 
+## Alternativ 0 — GitHub Codespaces (snabbast, kräver GitHub-konto)
+
+Repo:t innehåller `.devcontainer/` som gör hela jobbet:
+
+1. Öppna <https://codespaces.new/smr293/test321?quickstart=1>
+2. Vänta ~3 min (install → build → server startar)
+3. Portfliken 3000 har **public** visibility → URL:en `https://<codespace>-3000.app.github.dev` kan delas med kunden
+4. Inloggning: `owner@demo.mma` / `coach@demo.mma` / `fighter@demo.mma` med lösenord `demo1234`;
+   superadmin-lösenordet skrivs ut i terminalen vid första starten (sparas i `~/.mma-os-demo.env`)
+
+Bra för kunddemo på minuter. Begränsningar: codespacen stängs av efter inaktivitet (ställ in
+`--idle-timeout`, max 4 h) och drar av din Codespaces-kvot. För en permanent domän: använd Fly.io nedan.
+
+Starta om manuellt i en codespace: `bash .devcontainer/start.sh` (idempotent).
+
 ## Verifierat i den här versionen
 
 Produktionsbygget (standalone, `NODE_ENV=production`) startades mot en tom databas med `DEMO_SEED=true` och gjorde allt själv på första starten:

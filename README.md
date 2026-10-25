@@ -6,6 +6,23 @@
 - **Design:** mobile-first, dark premium UI with light mode; WCAG 2.2 AA targets (skip link, focus styles, labels, live regions, reduced motion)
 - **Security:** tenant isolation on every query, Redis-free rate limiting, TOTP MFA, hash-chained audit log, signed Stripe webhooks, rotating QR check-in tokens
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/smr293/test321?quickstart=1)
+
+## Visit the app from GitHub (no local install)
+
+Click the badge above (or open <https://codespaces.new/smr293/test321?quickstart=1>) → GitHub starts a
+Codespace, runs `.devcontainer/start.sh`, and serves the app on port 3000 with **public** visibility.
+After ~3 minutes the codespace prints the shareable URL:
+
+```
+https://<codespace-name>-3000.app.github.dev
+```
+
+The devcontainer installs dependencies, builds the standalone bundle and boots the server with
+`DEMO_SEED=true` (two synthetic gyms, `owner@demo.mma` / `coach@demo.mma` / `fighter@demo.mma`,
+password `demo1234`). A random super-admin password is printed on first start. Re-running the
+script is a no-op while the server is healthy; `MMA_FORCE_BUILD=1` rebuilds.
+
 ## Quick start
 
 ```bash
