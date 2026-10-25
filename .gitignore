@@ -1,0 +1,44 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
+
+# logs, temp, caches
+*.log
+logs/
+tmp/
+.cache/
+
+# environment / secrets
+.env
+.env.*
+!.env.example
+*.pem
+credentials.json
+
+# node / js
+node_modules/
+npm-debug.log*
+yarn-error.log*
+.pnpm-store/
+dist/
+build/
+.next/
+.nuxt/
+out/
+coverage/
+.parcel-cache/
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+.tox/
