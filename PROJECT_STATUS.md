@@ -27,7 +27,7 @@ Status legend: **NOT STARTED** · **IN PROGRESS** · **IMPLEMENTED** (code + typ
 | Health, webhook and cron API routes | TESTED | `/api/health` 200; webhook 503 without secret; cron 503/401 without token |
 | E2E Playwright specs | IMPLEMENTED · **BLOCKED** | 5 specs authored; browser download blocked in sandbox (`playwright.azureedge.net`), so **not executed** |
 | Dockerfile + compose + production env template | IMPLEMENTED · **BLOCKED** | files complete; **no Docker daemon in sandbox**, so image not built here |
-| Customer demo deployment (Fly.io / Render blueprints, `DEMO_SEED`) | TESTED | `fly.toml`, `render.yaml`, `docs/DEMO.md`; **standalone production build booted from an empty DB**: migrations + 2 demo gyms + 19 members + admin, badge + `noindex`, 15 routes 200 |
+| Customer demo deployment (Fly.io / Render blueprints, `DEMO_SEED`) | TESTED | `fly.toml`, `render.yaml`, `docs/DEMO.md`; **standalone production build booted from an empty DB**: migrations + 2 demo gyms + 19 members + admin, badge + `noindex`, 19 routes 200 (`/`, `/login`, gym + fighter + admin consoles) |
 | Deployment + security + architecture + testing docs | TESTED | `docs/*.md`, README; commands and env vars match the code |
 | Production launch / real payments | **BLOCKED (by policy)** | requires explicit authorization; sandbox billing only, clearly labelled |
 | Strict nonce-based CSP | NOT STARTED | documented as pre-launch hardening; security headers already set |
