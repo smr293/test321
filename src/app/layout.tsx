@@ -4,6 +4,7 @@ import { GeistSans } from "geist/font/sans";
 import { cookies } from "next/headers";
 import { Suspense } from "react";
 import { Flash } from "@/components/flash";
+import { env } from "@/lib/env";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -11,7 +12,8 @@ export const metadata: Metadata = {
   description:
     "The all-in-one platform for MMA gyms: memberships, billing, classes, attendance, fighters, coaches and fight camps.",
   applicationName: "MMA OS",
-  robots: { index: true, follow: true },
+  // Demo deployments are never indexed by search engines.
+  robots: env.demoSeed ? { index: false, follow: false } : { index: true, follow: true },
 };
 
 export const viewport: Viewport = {
@@ -37,6 +39,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <Suspense fallback={null}>
           <Flash />
         </Suspense>
+        {env.demoSeed ? (
+          <div className="pointer-events-none fixed bottom-3 left-3 z-[60] rounded-full border px-3 py-1 text-[0.68rem] font-medium shadow-lg"
+               style={{ background: "var(--surface)", borderColor: "var(--line-strong)", color: "var(--muted)" }}>
+            Demo environment · synthetic data · payments are tests
+          </div>
+        ) : null}
       </body>
     </html>
   );

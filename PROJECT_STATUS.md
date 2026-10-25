@@ -2,7 +2,7 @@
 
 _Last updated: 2026-10-25 · branch `arena/27fec5ff-test321`_
 
-**Remaining work until fully complete: ~8 % (92 % done).**
+**Remaining work until fully complete: ~6 % (94 % done).**
 
 Status legend: **NOT STARTED** · **IN PROGRESS** · **IMPLEMENTED** (code + types green) · **TESTED** (automated or verified runtime) · **BLOCKED** (environment dependency).
 
@@ -27,18 +27,20 @@ Status legend: **NOT STARTED** · **IN PROGRESS** · **IMPLEMENTED** (code + typ
 | Health, webhook and cron API routes | TESTED | `/api/health` 200; webhook 503 without secret; cron 503/401 without token |
 | E2E Playwright specs | IMPLEMENTED · **BLOCKED** | 5 specs authored; browser download blocked in sandbox (`playwright.azureedge.net`), so **not executed** |
 | Dockerfile + compose + production env template | IMPLEMENTED · **BLOCKED** | files complete; **no Docker daemon in sandbox**, so image not built here |
+| Customer demo deployment (Fly.io / Render blueprints, `DEMO_SEED`) | TESTED | `fly.toml`, `render.yaml`, `docs/DEMO.md`; **standalone production build booted from an empty DB**: migrations + 2 demo gyms + 19 members + admin, badge + `noindex`, 15 routes 200 |
 | Deployment + security + architecture + testing docs | TESTED | `docs/*.md`, README; commands and env vars match the code |
 | Production launch / real payments | **BLOCKED (by policy)** | requires explicit authorization; sandbox billing only, clearly labelled |
 | Strict nonce-based CSP | NOT STARTED | documented as pre-launch hardening; security headers already set |
 | Postgres / multi-replica scaling | NOT STARTED | optional; single-node SQLite is the V1 target (documented) |
 
-## What is left (~8 %)
+## What is left (~6 %)
 
-1. **Run the Playwright suite in a browser-enabled environment** (`npx playwright install chromium && npm run test:e2e`) and fix any selector drift.
-2. **Build and smoke-test the Docker image** (`docker compose build && up -d`) where a daemon exists; verify the `/app/data` volume and healthcheck.
-3. **Add a strict CSP** (nonce/hash based for Next.js) and re-run the header tests.
-4. **Visual/QA pass** across breakpoints and screen readers against WCAG 2.2 AA (automated axe run recommended).
-5. **Production go-live** — secrets, TLS, backups, Stripe live keys — only after explicit authorization.
+1. **Host the customer demo** — `fly launch` per `docs/DEMO.md` (needs an account; not runnable from the sandbox).
+2. **Run the Playwright suite in a browser-enabled environment** (`npx playwright install chromium && npm run test:e2e`) and fix any selector drift.
+3. **Build and smoke-test the Docker image** (`docker compose build && up -d`) where a daemon exists; verify the `/app/data` volume and healthcheck.
+4. **Add a strict CSP** (nonce/hash based for Next.js) and re-run the header tests.
+5. **Visual/QA pass** across breakpoints and screen readers against WCAG 2.2 AA (automated axe run recommended).
+6. **Production go-live** — secrets, TLS, backups, Stripe live keys — only after explicit authorization.
 
 None of these block local use of the product.
 

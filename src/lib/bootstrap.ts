@@ -36,10 +36,16 @@ export async function ensureBootstrap() {
     }
 
     // Demo data is keyed on the absence of any gym, not on platform settings.
+    // In production it only loads when DEMO_SEED=true is set explicitly.
     const hasOrg = await db.select({ id: organizations.id }).from(organizations).limit(1);
-    if (!hasOrg[0] && env.isDev && !env.isTest) {
+    const wantsDemo = (env.isDev && !env.isTest) || env.demoSeed;
+    if (!hasOrg[0] && wantsDemo) {
       await seedDemo();
-      console.info("[mma-os] demo data seeded");
+      console.info(
+        env.isProd
+          ? "[mma-os] DEMO_SEED=true — synthetic demo gyms created. Do not use for real customer data."
+          : "[mma-os] demo data seeded",
+      );
     }
     await ensurePlatformDefaults();
   })();

@@ -18,10 +18,13 @@ services:
       BOOTSTRAP_ADMIN_ENABLED: ${BOOTSTRAP_ADMIN_ENABLED:-false}
       BOOTSTRAP_ADMIN_EMAIL: ${BOOTSTRAP_ADMIN_EMAIL:-admin@mmaos.local}
       BOOTSTRAP_ADMIN_PASSWORD: ${BOOTSTRAP_ADMIN_PASSWORD:-}
+      # "true" seeds synthetic demo gyms on first boot (customer demos only).
+      DEMO_SEED: ${DEMO_SEED:-false}
       STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-}
       STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-}
       RESEND_API_KEY: ${RESEND_API_KEY:-}
       CRON_SECRET: ${CRON_SECRET:-}
+      AUDIT_PURGE_ENABLED: ${AUDIT_PURGE_ENABLED:-false}
       DATA_RETENTION_DAYS: ${DATA_RETENTION_DAYS:-730}
     volumes:
       - mma_data:/app/data

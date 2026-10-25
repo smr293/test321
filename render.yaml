@@ -1,0 +1,44 @@
+# Render blueprint for MMA OS (single instance + persistent disk for SQLite).
+# 1. Push this repo to GitHub.
+# 2. Render dashboard → New → Blueprint → select the repo.
+# 3. Fill the secret env vars (AUTH_SECRET, BOOTSTRAP_ADMIN_PASSWORD).
+services:
+  - type: web
+    name: mma-os
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: starter
+    region: frankfurt
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        value: file:/app/data/mma.db
+      - key: AUTH_SECRET
+        generateValue: true
+      - key: APP_URL
+        sync: false
+      - key: DEMO_SEED
+        value: "true"
+      - key: BOOTSTRAP_ADMIN_ENABLED
+        value: "true"
+      - key: BOOTSTRAP_ADMIN_EMAIL
+        value: admin@example.com
+      - key: BOOTSTRAP_ADMIN_PASSWORD
+        sync: false
+      - key: FORCE_ADMIN_PASSWORD_CHANGE
+        value: "true"
+      - key: CRON_SECRET
+        generateValue: true
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+    disk:
+      name: mma-data
+      mountPath: /app/data
+      sizeGB: 5

@@ -17,6 +17,7 @@ npm run dev                       # http://localhost:3000
 ```
 
 First boot in development also creates a platform admin and seeds demo data if the database has no gyms.
+For a hosted customer demo set `DEMO_SEED=true` in production — see [docs/DEMO.md](docs/DEMO.md).
 
 ### Demo accounts
 
@@ -55,6 +56,7 @@ Integration tests run against a disposable SQLite database created by the real m
 
 ## Operations
 
+- [docs/DEMO.md](docs/DEMO.md) — **share a live demo with a customer** (Fly.io / Render / VPS)
 - [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) — Docker, environment, backups, cron, Stripe, TLS
 - [docs/SECURITY.md](docs/SECURITY.md) — threat model, controls, GDPR, limitations
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — modules, data model, request flow
@@ -74,6 +76,7 @@ Integration tests run against a disposable SQLite database created by the real m
 | `npx tsx scripts/dev-info.ts` | print demo users, roles, member/org ids |
 | `npx tsx scripts/dev-admin.ts` | ensure the development super admin exists |
 | `npx tsx scripts/repair-audit-chain.ts` | re-derive the audit hash chain (incident tool) |
+| `npx tsx scripts/prod-boot-check.ts` | verify the production first-boot path on a throwaway DB |
 
 ## License
 

@@ -8,6 +8,8 @@ export const env = {
   isProd: nodeEnv === "production",
   isDev: nodeEnv !== "production",
   isTest: nodeEnv === "test" || process.env.MMA_TEST === "1",
+  /** Opt-in demo dataset on first boot (also in production). Never enable for real gyms. */
+  demoSeed: process.env.DEMO_SEED === "true",
   appUrl: process.env.APP_URL ?? "http://localhost:3000",
   authSecret: process.env.AUTH_SECRET ?? "",
   databaseUrl: process.env.DATABASE_URL ?? "file:./data/mma.db",
@@ -43,6 +45,8 @@ export function assertSecureConfig() {
     problems.push("AUTH_SECRET must be at least 32 characters in production");
   if (env.bootstrap.enabled && env.bootstrap.password.length < 12)
     problems.push("BOOTSTRAP_ADMIN_PASSWORD must be a strong (12+ char) secret in production");
+  if (env.demoSeed && env.bootstrap.enabled && env.bootstrap.password === "admin")
+    problems.push("DEMO_SEED=true requires a real BOOTSTRAP_ADMIN_PASSWORD (never 'admin')");
   if (problems.length) {
     // Fail closed: never boot production with weak secrets.
     throw new Error(`Insecure configuration: ${problems.join("; ")}`);

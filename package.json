@@ -16,7 +16,8 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "verify": "npm run lint && npm test && npm run build",
-    "audit:repair": "tsx scripts/repair-audit-chain.ts"
+    "audit:repair": "tsx scripts/repair-audit-chain.ts",
+    "demo:check": "NODE_ENV=production DEMO_SEED=true DATABASE_URL=file:./data/demo-check.db npx tsx scripts/prod-boot-check.ts"
   },
   "dependencies": {
     "@node-rs/argon2": "^2.0.2",

@@ -456,6 +456,13 @@ export async function seedDemo() {
   const allSessions = await db.select().from(classSessions).where(eq(classSessions.orgId, org.id));
   const now = new Date();
 
+  // Invoice numbers are globally unique; derive a deterministic sequence instead
+  // of random values (random numbers collide under the birthday paradox).
+  let invoiceSeq = Number(
+    (await db.select({ n: sql<number>`count(*)` }).from(invoices))[0]?.n ?? 0,
+  );
+  const nextInvoiceNo = () => `INV-2025-${String(++invoiceSeq).padStart(5, "0")}`;
+
   const existingSubs = await db.select().from(subscriptions).where(eq(subscriptions.orgId, org.id));
   const planRotation = [unlimited, threePerWeek, bjj, unlimited, threePerWeek, unlimited, kids, bjj, unlimited, unlimited, threePerWeek, intro];
   const statusRotation = ["active", "active", "active", "past_due", "active", "active", "active", "paused", "active", "cancel_scheduled", "trial", "active"];
@@ -497,7 +504,7 @@ export async function seedDemo() {
             orgId: org.id,
             subscriptionId: inserted.id,
             memberId,
-            number: `INV-2025-${String(1000 + Math.floor(Math.random() * 8000))}`,
+            number: nextInvoiceNo(),
             amountCents: plan.priceCents,
             taxCents: Math.round(plan.priceCents * 0.25),
             currency: "SEK",
@@ -1024,7 +1031,17 @@ export async function seedDemo() {
   return { orgId: org.id, members: Number(counts[0]?.n ?? 0) };
 }
 
-if (process.argv[1]?.includes("seed")) {
+// Only auto-run when this file is executed directly (`npm run db:seed`).
+// A loose substring match would also fire when any other script name contains
+// "seed", causing two concurrent seed runs and UNIQUE violations.
+const invokedDirectly = (() => {
+  const entry = process.argv[1];
+  if (!entry) return false;
+  const base = entry.split(/[\\/]/).pop() ?? "";
+  return base.replace(/\.(ts|js|mjs|cjs)$/, "") === "seed";
+})();
+
+if (invokedDirectly) {
   seedDemo()
     .then((r) => {
       console.log(`[mma-os] demo data ready — gym ${r.orgId} with ${r.members} members`);
