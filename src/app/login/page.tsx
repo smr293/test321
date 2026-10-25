@@ -9,7 +9,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
   const auth = await getAuth();
   if (auth) redirect(auth.isSuperAdmin ? "/admin" : auth.memberships.some((m) => m.role !== "fighter") ? "/gym" : "/app");
   const { next } = await searchParams;
-  const demo = env.isDev
+  const demo = env.isDev || env.demoSeed
     ? [
         { label: "Gym owner", email: "owner@demo.mma", password: "demo1234" },
         { label: "Coach", email: "coach@demo.mma", password: "demo1234" },

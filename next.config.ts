@@ -4,6 +4,8 @@ const nextConfig: NextConfig = {
   output: "standalone",
   serverExternalPackages: ["better-sqlite3", "@node-rs/argon2"],
   poweredByHeader: false,
+  // The arena preview proxies the dev server under *.e2b.app.
+  allowedDevOrigins: ["*.e2b.app"],
   async headers() {
     return [
       {
