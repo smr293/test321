@@ -1,5 +1,6 @@
 import { sql } from "drizzle-orm";
 import { db } from "@/db/client";
+import { bootOnce } from "@/lib/boot";
 import { env } from "@/lib/env";
 
 export const dynamic = "force-dynamic";
@@ -8,6 +9,7 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   const started = Date.now();
   try {
+    await bootOnce();
     await db.get(sql`select 1`);
     return Response.json(
       {

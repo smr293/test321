@@ -7,7 +7,6 @@
  * internally consistent data. All payments are marked as sandbox/manual and
  * are clearly test data.
  */
-import "dotenv/config";
 import { and, eq, sql } from "drizzle-orm";
 import { db } from "./client";
 import {
@@ -1029,26 +1028,4 @@ export async function seedDemo() {
 
   const counts = await db.select({ n: sql<number>`count(*)` }).from(orgMembers).where(eq(orgMembers.orgId, org.id));
   return { orgId: org.id, members: Number(counts[0]?.n ?? 0) };
-}
-
-// Only auto-run when this file is executed directly (`npm run db:seed`).
-// A loose substring match would also fire when any other script name contains
-// "seed", causing two concurrent seed runs and UNIQUE violations.
-const invokedDirectly = (() => {
-  const entry = process.argv[1];
-  if (!entry) return false;
-  const base = entry.split(/[\\/]/).pop() ?? "";
-  return base.replace(/\.(ts|js|mjs|cjs)$/, "") === "seed";
-})();
-
-if (invokedDirectly) {
-  seedDemo()
-    .then((r) => {
-      console.log(`[mma-os] demo data ready — gym ${r.orgId} with ${r.members} members`);
-      process.exit(0);
-    })
-    .catch((error) => {
-      console.error(error);
-      process.exit(1);
-    });
 }

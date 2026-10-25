@@ -10,7 +10,7 @@
     "lint": "tsc --noEmit",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx src/db/migrate.ts",
-    "db:seed": "tsx src/db/seed.ts",
+    "db:seed": "tsx scripts/seed.ts",
     "db:reset": "rm -f data/mma.db && npm run db:migrate && npm run db:seed",
     "test": "vitest run",
     "test:watch": "vitest",

@@ -1,7 +1,6 @@
 import { eq } from "drizzle-orm";
 import { db } from "@/db/client";
 import { organizations, users } from "@/db/schema";
-import { seedDemo } from "@/db/seed";
 import { env } from "./env";
 import { hashPassword } from "./password";
 import { ensurePlatformDefaults } from "./platform-defaults";
@@ -40,6 +39,8 @@ export async function ensureBootstrap() {
     const hasOrg = await db.select({ id: organizations.id }).from(organizations).limit(1);
     const wantsDemo = (env.isDev && !env.isTest) || env.demoSeed;
     if (!hasOrg[0] && wantsDemo) {
+      // Imported lazily so the demo generator never lands in the edge bundle.
+      const { seedDemo } = await import("@/db/seed");
       await seedDemo();
       console.info(
         env.isProd

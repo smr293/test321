@@ -4,6 +4,7 @@ import { GeistSans } from "geist/font/sans";
 import { cookies } from "next/headers";
 import { Suspense } from "react";
 import { Flash } from "@/components/flash";
+import { bootOnce } from "@/lib/boot";
 import { env } from "@/lib/env";
 import "./globals.css";
 
@@ -23,6 +24,8 @@ export const viewport: Viewport = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  // First render of the process: run migrations + bootstrap (idempotent).
+  await bootOnce();
   const jar = await cookies();
   const theme = jar.get("mma_theme")?.value ?? "dark";
   const light = theme === "light";
