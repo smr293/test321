@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { eq } from "drizzle-orm";
 import { db } from "@/db/client";
 import { invoices, orgMembers } from "@/db/schema";
-import { ForbiddenError, can, effectivePermissions, getCoachAthleteIds, getMemberForUser, getTenantMember, PERMISSIONS } from "@/lib/authz";
+import { ForbiddenError, can, effectivePermissions, getCoachAthleteIds, getMemberForUser, getTenantMember, isStaffRole, PERMISSIONS } from "@/lib/authz";
 import { createInvoiceForSubscription, createMembership, getMemberSubscription } from "@/lib/membership";
 import { bookSession, BookingError } from "@/lib/booking";
 import { makeClassWithSession, makeMember, makeOrg, makePlan, memberByEmail, seededOrg } from "./helpers";
@@ -59,6 +59,13 @@ describe("tenant isolation", () => {
       expect(can("fighter", permission)).toBe(false);
       expect(can("fighter", permission, JSON.stringify(PERMISSIONS))).toBe(false);
     }
+  });
+
+  it("C: the gym workspace is staff-only (fighter is never a staff role)", () => {
+    expect(isStaffRole("owner")).toBe(true);
+    expect(isStaffRole("manager")).toBe(true);
+    expect(isStaffRole("coach")).toBe(true);
+    expect(isStaffRole("fighter")).toBe(false);
   });
 
   it("C: manager permission overrides cannot invent unknown permissions", () => {
