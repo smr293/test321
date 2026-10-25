@@ -6,11 +6,11 @@
 - **Design:** mobile-first, dark premium UI with light mode; WCAG 2.2 AA targets (skip link, focus styles, labels, live regions, reduced motion)
 - **Security:** tenant isolation on every query, Redis-free rate limiting, TOTP MFA, hash-chained audit log, signed Stripe webhooks, rotating QR check-in tokens
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/smr293/test321/tree/arena/27fec5ff-test321?quickstart=1)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/smr293/test321?quickstart=1)
 
 ## Visit the app from GitHub (no local install)
 
-Click the badge above (or open <https://codespaces.new/smr293/test321/tree/arena/27fec5ff-test321?quickstart=1>) → GitHub starts a
+Click the badge above (or open <https://codespaces.new/smr293/test321?quickstart=1>) → GitHub starts a
 Codespace, runs `.devcontainer/start.sh`, and serves the app on port 3000 with **public** visibility.
 After ~3 minutes the codespace prints the shareable URL:
 
@@ -26,12 +26,16 @@ script is a no-op while the server is healthy; `MMA_FORCE_BUILD=1` rebuilds.
 ## Quick start
 
 ```bash
+git clone https://github.com/smr293/test321.git && cd test321
 npm install
 cp .env.example .env.local        # dev defaults work out of the box
 npm run db:migrate                # apply schema
 npm run db:seed                   # optional: realistic demo gyms (also auto-runs on first dev boot)
 npm run dev                       # http://localhost:3000
 ```
+
+Requires **Node.js ≥ 22**. Full handover runbook (prerequisites, git workflow, troubleshooting):
+**[docs/DEV_SETUP.md](docs/DEV_SETUP.md)**.
 
 First boot in development also creates a platform admin and seeds demo data if the database has no gyms.
 For a hosted customer demo set `DEMO_SEED=true` in production — see [docs/DEMO.md](docs/DEMO.md).
@@ -82,6 +86,7 @@ Integration tests run against a disposable SQLite database created by the real m
 
 ## Operations
 
+- [docs/DEV_SETUP.md](docs/DEV_SETUP.md) — **run it locally on a new machine** (prereqs, scripts, workflow, troubleshooting)
 - [docs/DEMO.md](docs/DEMO.md) — **share a live demo with a customer** (Fly.io / Render / VPS)
 - [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) — Docker, environment, backups, cron, Stripe, TLS
 - [docs/SECURITY.md](docs/SECURITY.md) — threat model, controls, GDPR, limitations
