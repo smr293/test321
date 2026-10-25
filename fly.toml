@@ -1,0 +1,52 @@
+# Fly.io deployment for MMA OS.
+#   fly launch --copy-config --no-deploy
+#   fly volumes create mma_data --size 3 --region arn
+#   fly secrets set AUTH_SECRET=... BOOTSTRAP_ADMIN_PASSWORD=... DEMO_SEED=true APP_URL=https://<app>.fly.dev
+#   fly deploy
+app = "mma-os-demo"
+primary_region = "arn"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  NODE_ENV = "production"
+  DATABASE_URL = "file:/app/data/mma.db"
+  PORT = "3000"
+  HOSTNAME = "0.0.0.0"
+  # Set to "false" for a real customer gym; "true" seeds synthetic demo gyms on first boot.
+  DEMO_SEED = "true"
+  BOOTSTRAP_ADMIN_ENABLED = "true"
+  BOOTSTRAP_ADMIN_EMAIL = "admin@example.com"
+  FORCE_ADMIN_PASSWORD_CHANGE = "true"
+
+[[mounts]]
+  source = "mma_data"
+  destination = "/app/data"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+  [http_service.concurrency]
+    type = "requests"
+    soft_limit = 40
+    hard_limit = 60
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"
+
+[checks.health]
+  type = "http"
+  port = 3000
+  path = "/api/health"
+  interval = "30s"
+  timeout = "5s"
+  grace_period = "25s"
+
+# SQLite = exactly one machine. Do not scale out without migrating to Postgres.
