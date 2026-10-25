@@ -15,7 +15,7 @@ import { redirect } from "next/navigation";
 import type { ReactNode } from "react";
 import { StaffShell } from "@/components/shell/app-shell";
 import { Card } from "@/components/ui/primitives";
-import { getAuth, getOrgContext } from "@/lib/authz";
+import { getAuth, getOrgContext, isStaffRole } from "@/lib/authz";
 import { unreadCount } from "@/lib/notifications";
 import { getEntitlements } from "@/lib/entitlements";
 
@@ -29,6 +29,10 @@ export default async function GymLayout({ children }: { children: ReactNode }) {
     if (auth.memberships.length === 0) redirect("/app/onboarding");
     redirect("/app");
   }
+
+  // Members and fighters have no staff surface: send them to the athlete app.
+  // Their role carries zero permissions, but the UI shell must not render at all.
+  if (!isStaffRole(ctx.role)) redirect("/app");
 
   const unread = await unreadCount(auth.user.id);
   const ent = await getEntitlements(ctx.org.id);

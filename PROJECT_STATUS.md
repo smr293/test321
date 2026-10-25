@@ -10,7 +10,7 @@ Status legend: **NOT STARTED** · **IN PROGRESS** · **IMPLEMENTED** (code + typ
 | --- | --- | --- |
 | Multi-tenant schema (~51 tables, Drizzle + SQLite) | TESTED | migration `drizzle/0000_late_whizzer.sql`; 64 Vitest tests use the real schema |
 | Auth (Argon2id, sessions, lockout, reset, TOTP MFA) | TESTED | `tests/auth-security.test.ts` (9 tests); runtime login flows verified |
-| Tenant isolation + RBAC | TESTED | `tests/tenant-isolation.test.ts` scenarios **A–E**, `tests/coach-relation.test.ts`; coach → foreign athlete returns 404 in production smoke test |
+| Tenant isolation + RBAC | TESTED | gym workspace is staff-only (`isStaffRole`) — a member/fighter now gets 307 to `/app` on every `/gym/*` route; `tests/tenant-isolation.test.ts` scenarios **A–E**, `tests/coach-relation.test.ts`; coach → foreign athlete returns 404 in production smoke test |
 | Gym workspace (members, plans, memberships, classes, calendar, attendance, payments, refunds, analytics, messages, settings) | TESTED | all 19 `/gym/*` routes return 200 with owner session; domain rules covered by `membership.test.ts`, `booking.test.ts` |
 | Coach ↔ trainer/athlete relationship | TESTED | assignments, athlete-side coach card + messaging, assignment-scoped coach access, private-note filtering; tests both directions |
 | Fighter portal (home, schedule, QR booking, progress, fights, membership, billing, profile, notifications, messages, support, onboarding) | TESTED | all 12 `/app/*` routes 200 in production build; QR + booking + replay tested |

@@ -66,6 +66,14 @@ const ROLE_PERMISSIONS: Record<OrgRole, Permission[]> = {
   fighter: [],
 };
 
+/**
+ * Staff = anyone who may open the gym workspace (`/gym/*`).
+ * Members/fighters only ever see the athlete app (`/app/*`).
+ */
+export function isStaffRole(role: OrgRole): boolean {
+  return role === "owner" || role === "manager" || role === "coach";
+}
+
 /** Effective permissions for a role, optionally overridden per manager. */
 export function effectivePermissions(role: OrgRole, overrides?: string | null): Set<Permission> {
   if (role === "owner") return new Set(PERMISSIONS);
