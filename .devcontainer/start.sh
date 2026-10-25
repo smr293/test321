@@ -13,7 +13,13 @@ if curl -sf "http://127.0.0.1:$PORT/api/health" >/dev/null 2>&1; then
   exit 0
 fi
 
-# --- one-time secrets (persist across codespace restarts) -------------------
+# --- dependencies (before NODE_ENV=production, so dev deps are installed) --
+if [ ! -d node_modules ]; then
+  echo "[mma-os] installing dependencies (first run, ~2 min)…"
+  env -u NODE_ENV npm install --no-audit --no-fund
+fi
+
+# --- one-time secrets (persist across codespace restarts) ------------------
 if [ ! -f "$STATE" ]; then
   umask 077
   {
@@ -44,21 +50,14 @@ if [ -z "${APP_URL:-}" ] && [ -n "${CODESPACE_NAME:-}" ]; then
 fi
 export APP_URL="${APP_URL:-http://localhost:$PORT}"
 
-# --- dependencies ----------------------------------------------------------
-if [ ! -d node_modules ]; then
-  echo "[mma-os] installing dependencies (first run, ~2 min)…"
-  npm install --no-audit --no-fund
-fi
-
 # --- build (standalone bundle) --------------------------------------------
 if [ ! -f .next/standalone/server.js ] || [ -n "${MMA_FORCE_BUILD:-}" ]; then
   echo "[mma-os] building…"
   npx next build
-  rm -rf .next/standalone/.next/static .next/standalone/public
+  rm -rf .next/standalone/.next/static .next/standalone/public .next/standalone/drizzle
   mkdir -p .next/standalone/.next
   cp -r .next/static .next/standalone/.next/static
   cp -r public .next/standalone/public
-  rm -rf .next/standalone/drizzle
   cp -r drizzle .next/standalone/drizzle
 fi
 
