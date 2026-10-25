@@ -45,7 +45,7 @@ None of these block local use of the product.
 ## Resumable checkpoint
 
 - Branch: `arena/27fec5ff-test321` (commit/push there).
-- App is running as a **production build** on `http://0.0.0.0:3000` (process label `MMA OS`), backed by `data/mma.db`.
+- App is running as a **dev server** on `http://0.0.0.0:3000` (process label `MMA OS`), backed by `data/mma.db`, so the dev admin `admin`/`admin` and demo quick-login work in the preview. A production `next build` + standalone server was also built and smoke-tested successfully (see above).
 - To resume development: `npm run dev` (stop the production server first, or use port 3100).
 - Verify state: `npm run lint && npm test && npm run build`, then `curl -s localhost:3000/api/health`.
 - Auth for curl: `TOKEN=$(npx tsx scripts/dev-session.ts fighter@demo.mma)` then `curl -H "Cookie: mma_session=$TOKEN" …`.
