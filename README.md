@@ -6,11 +6,11 @@
 - **Design:** mobile-first, dark premium UI with light mode; WCAG 2.2 AA targets (skip link, focus styles, labels, live regions, reduced motion)
 - **Security:** tenant isolation on every query, Redis-free rate limiting, TOTP MFA, hash-chained audit log, signed Stripe webhooks, rotating QR check-in tokens
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/smr293/test321?quickstart=1)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/smr293/test321/tree/arena/27fec5ff-test321?quickstart=1)
 
 ## Visit the app from GitHub (no local install)
 
-Click the badge above (or open <https://codespaces.new/smr293/test321?quickstart=1>) → GitHub starts a
+Click the badge above (or open <https://codespaces.new/smr293/test321/tree/arena/27fec5ff-test321?quickstart=1>) → GitHub starts a
 Codespace, runs `.devcontainer/start.sh`, and serves the app on port 3000 with **public** visibility.
 After ~3 minutes the codespace prints the shareable URL:
 

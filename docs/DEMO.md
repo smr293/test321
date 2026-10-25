@@ -73,7 +73,7 @@ På Fly kan du i stället sätta `min_machines_running = 0` (maskinen sover när
 
 Repo:t innehåller `.devcontainer/` som gör hela jobbet:
 
-1. Öppna <https://codespaces.new/smr293/test321?quickstart=1>
+1. Öppna <https://codespaces.new/smr293/test321/tree/arena/27fec5ff-test321?quickstart=1>
 2. Vänta ~3 min (install → build → server startar)
 3. Portfliken 3000 har **public** visibility → URL:en `https://<codespace>-3000.app.github.dev` kan delas med kunden
 4. Inloggning: `owner@demo.mma` / `coach@demo.mma` / `fighter@demo.mma` med lösenord `demo1234`;
